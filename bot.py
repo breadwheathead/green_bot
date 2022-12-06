@@ -1,10 +1,10 @@
 import logging
-from aiogram import Bot, types
+from aiogram import Bot
 from aiogram.types import Message
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 
-from config.config import TOKEN
+from config import TOKEN
 
 logging.basicConfig(level=logging.INFO)
 
