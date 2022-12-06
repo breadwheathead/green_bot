@@ -35,6 +35,7 @@ async def get_weather_command(message: Message):
 async def get_rate_command(message: Message):
     await message.answer('заглушка')
 
+
 @dp.message_handler(content_types='text')
 async def echo(message: Message):
     await message.reply(f'Пока что я просто повторяю любое сообщение, кроме команд: {message.text}')
