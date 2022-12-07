@@ -1,11 +1,12 @@
-from aiogram.types import Message
+from aiogram.types import Message, ReplyKeyboardRemove
 from aiogram.dispatcher import Dispatcher
 from bot_init import bot
 from messages import MESSAGES
+from keyboards import keyboard
 
 
 async def start_command(message: Message):
-    await bot.send_message(message.from_user.id, MESSAGES['welcome'], reply_markup=types.ReplyKeyboardRemove())
+    await bot.send_message(message.from_user.id, MESSAGES['welcome'], reply_markup=ReplyKeyboardRemove())
 
 
 async def help_command(message: Message):
