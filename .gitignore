@@ -1,2 +1,7 @@
 .idea/
+<<<<<<< HEAD
 /config.py
+=======
+__pycache__/
+config.py
+>>>>>>> 4690989af185d7548643b5e10d1ec77830689e6c
