@@ -57,6 +57,6 @@ def register_handlers(dp: Dispatcher):
     # dp.register_message_handler(help_command, commands='help')
     # dp.register_message_handler(weather_command, commands='weather')
     # dp.register_message_handler(rate_command, commands='rate')
-    dp.register_message_handler(show_keyboard, filters.IDFilter(ADMIN_ID), filters.Text(equals='Показать кнопки'))
-    dp.register_message_handler(unknown_command, filters.IDFilter(ADMIN_ID), content_types=ContentTypes.ANY)
+    dp.register_message_handler(show_keyboard, filters.Text(equals='Показать кнопки'))
+    dp.register_message_handler(unknown_command, content_types=ContentTypes.ANY)
 
