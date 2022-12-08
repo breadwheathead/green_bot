@@ -6,7 +6,7 @@ from keyboards import keyboard
 
 
 async def start_command(message: Message):
-    await bot.send_message(message.from_user.id, MESSAGES['welcome'], reply_markup=ReplyKeyboardRemove())
+    await bot.send_message(message.from_user.id, MESSAGES['welcome'].format(message.from_user.first_name), reply_markup=ReplyKeyboardRemove())
 
 
 async def help_command(message: Message):
@@ -25,7 +25,7 @@ async def echo(message: Message):
     await message.reply(f'Пока что я просто повторяю любое сообщение, кроме команд: {message.text}')
 
 
-async def register_handlers(dp: Dispatcher):
+def register_handlers(dp: Dispatcher):
     dp.register_message_handler(start_command, commands='start')
     dp.register_message_handler(help_command, commands='help')
     dp.register_message_handler(get_weather_command, commands='weather')
