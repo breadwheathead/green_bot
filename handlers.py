@@ -1,4 +1,6 @@
-from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery, ContentTypes
+import asyncio
+from aiogram import types
+from aiogram.types import Message, CallbackQuery
 from aiogram.dispatcher import Dispatcher, filters
 from bot_init import bot
 from config import ADMIN_ID
@@ -51,12 +53,12 @@ def register_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(callback_rate, lambda c: c.data == 'rate')
 
     '''access denied'''
-    dp.register_message_handler(access_denied, lambda m: m.chat.id != ADMIN_ID, content_types=ContentTypes.ANY)
+    dp.register_message_handler(access_denied, lambda m: m.chat.id != ADMIN_ID, content_types=types.ContentTypes.ANY)
 
     dp.register_message_handler(start_command, commands=['start', 'help'])
     # dp.register_message_handler(help_command, commands='help')
     # dp.register_message_handler(weather_command, commands='weather')
     # dp.register_message_handler(rate_command, commands='rate')
     dp.register_message_handler(show_keyboard, filters.Text(equals='Показать кнопки'))
-    dp.register_message_handler(unknown_command, content_types=ContentTypes.ANY)
+    dp.register_message_handler(unknown_command, content_types=types.ContentTypes.ANY)
 
