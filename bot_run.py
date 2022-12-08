@@ -6,16 +6,17 @@ from handlers import register_handlers
 
 logging.basicConfig(level=logging.INFO)
 
-# COMMANDS = [
-#     BotCommand('/weather', 'прогноз погоды в локации на сегодня'),
-#     BotCommand('/rate', 'курс доллара на текущий момент')
-# ]
+COMMANDS = [
+    BotCommand('/help', 'Доступные команды'),
+    BotCommand('/weather', 'Прогноз погоды в локации на сегодня'),
+    BotCommand('/rate', 'Курс доллара на текущий момент')
+]
 
 
 async def on_startup(_):
     logging.info('Бот в работе')
     await bot.delete_my_commands()
-    # await bot.set_my_commands(COMMANDS)
+    await bot.set_my_commands(COMMANDS)
 
 register_handlers(dp)
 

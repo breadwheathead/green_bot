@@ -1,9 +1,7 @@
-from aiogram.types import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-reply_button = ReplyKeyboardMarkup(resize_keyboard=True).add('Показать кнопки')
-
-keyboard = InlineKeyboardMarkup(row_width=2, one_time_keyboard=True)
-weather_btn = InlineKeyboardButton('Прогноз погоды ⛅', callback_data='weather')
-rate_btn = InlineKeyboardButton('Курс доллара 💲', callback_data='rate')
+keyboard = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+weather_btn = KeyboardButton('/weather')
+rate_btn = KeyboardButton('/rate')
 
 keyboard.add(weather_btn, rate_btn)
