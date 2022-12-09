@@ -1,5 +1,5 @@
 import json
-
+from datetime import datetime
 import requests
 from pprint import pprint
 from config import OPEN_WEATHER_API_KEY
@@ -20,6 +20,11 @@ def get_location(city: str) -> tuple:
         print('Ошибка получения координат')
 
 
+def dt_convert(ts: int):
+    format = '%Y-%m-%d %H:%M:%S'
+    return datetime.fromtimestamp(ts).isoformat()
+
+
 def get_weather(lat: float, lon: float):
     url = URL.format(lat, lon, LANG, OPEN_WEATHER_API_KEY)
     try:
@@ -28,13 +33,14 @@ def get_weather(lat: float, lon: float):
         #     json.dump(response, f, indent=2, ensure_ascii=False)
 
         data = {
+            'first_timestamp': dt_convert(response['list'][0]['dt']),
             'city': response['city']['name'],
-            'sunrise': response['city']['sunrise'],
-            'sunset': response['city']['sunset'],
+            'sunrise': dt_convert(response['city']['sunrise']),
+            'sunset': dt_convert(response['city']['sunset']),
             'timezone': response['city']['timezone'],
-            'first_timestamp': response['list'][0]['dt_txt'],
             'weather': response['list'][0]['weather'][0]['description'].capitalize(),
             'temp': response['list'][0]['main']['temp'],
+            'pressure': response['list'][0]['main']['pressure'],
             'humidity': response['list'][0]['main']['humidity'],
         }
         pprint(data)
