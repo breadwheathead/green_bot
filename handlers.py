@@ -10,7 +10,7 @@ from weather import get_weather
 
 async def callback_weather_city(call: CallbackQuery):
     await bot.answer_callback_query(call.id)
-    weather = get_weather(call.message.text)
+    weather = get_weather('krasnoyarsk')
     await call.message.answer(weather)
 
 
