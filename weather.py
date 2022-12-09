@@ -1,30 +1,37 @@
 import requests
 from pprint import pprint
-from config import X_GISMETEO_TOKEN
+from config import OPEN_WEATHER_API_KEY
 
-URL = 'https://api.gismeteo.net/v2/weather/current/4368/'
+URL_CITY = 'http://api.openweathermap.org/geo/1.0/direct?q={}&&appid={}'
+URL = 'http://api.openweathermap.org/data/2.5/forecast?lat={}&lon={}&appid={}'
 
 
-def get_weather(city):
-    headers = {
-        'X-Gismeteo-Token': '56b30cb255.3443075'
-    }
-    session = requests.Session()
-    session.headers.update(headers)
+def get_location(city: str) -> tuple:
+    url_city = URL_CITY.format(city, OPEN_WEATHER_API_KEY)
     try:
-        r = session.get(URL)
-        print(session.headers)
-        print(r.headers)
+        r = requests.get(url_city)
+        data = r.json()
+        return data[0]['lat'], data[0]['lon']
+    except Exception as e:
+        print(e)
+        print('Ошибка получения координат')
+
+
+def get_weather(lat, lon):
+    url = URL.format(lat, lon, OPEN_WEATHER_API_KEY)
+    try:
+        r = requests.get(url)
         data = r.json()
         pprint(data)
     except Exception as e:
         print(e)
-        print('Ошибка')
+        print('Ошибка получения погоды')
 
 
 def main():
-    city = 'Moscow'
-    get_weather(city)
+    city = 'phuket'
+    lat, lon = get_location(city)
+    get_weather(lat, lon)
 
 
 if __name__ == '__main__':
