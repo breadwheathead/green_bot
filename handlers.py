@@ -5,11 +5,13 @@ from bot_init import bot
 from config import ADMIN_ID
 from messages import MESSAGES
 from keyboards import bottom_keyboard, weather_keyboard
+from weather import get_weather
 
 
 async def callback_weather_city(call: CallbackQuery):
     await bot.answer_callback_query(call.id)
-    await call.message.answer('OK')
+    weather = get_weather(call.message.text)
+    await call.message.answer(weather)
 
 
 async def callback_weather_location(call: CallbackQuery):

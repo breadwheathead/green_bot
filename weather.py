@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+import datetime
 import requests
 from pprint import pprint
 from config import OPEN_WEATHER_API_KEY
@@ -20,42 +20,41 @@ def get_location(city: str) -> tuple:
         print('Ошибка получения координат')
 
 
-def dt_convert(ts: int):
-    format = '%Y-%m-%d %H:%M:%S'
-    return datetime.fromtimestamp(ts).isoformat()
+def dt_convert(ts: int) -> str:
+    _format = '%Y-%m-%d %H:%M:%S'
+    return datetime.datetime.fromtimestamp(ts).isoformat()
 
 
-def get_weather(lat: float, lon: float):
+def weather(lat: float, lon: float) -> dict:
     url = URL.format(lat, lon, LANG, OPEN_WEATHER_API_KEY)
     try:
         response = requests.get(url).json()
-        # with open('weather.json', 'w', encoding='utf-8') as f:
-        #     json.dump(response, f, indent=2, ensure_ascii=False)
-
+        length_day = response['city']['sunset'] - response['city']['sunrise']
         data = {
             'first_timestamp': dt_convert(response['list'][0]['dt']),
             'city': response['city']['name'],
-            'sunrise': dt_convert(response['city']['sunrise']),
-            'sunset': dt_convert(response['city']['sunset']),
             'timezone': response['city']['timezone'],
+            'length_day': length_day // 3600,
             'weather': response['list'][0]['weather'][0]['description'].capitalize(),
             'temp': response['list'][0]['main']['temp'],
             'pressure': response['list'][0]['main']['pressure'],
             'humidity': response['list'][0]['main']['humidity'],
         }
         pprint(data)
-
+        return data
 
     except Exception as e:
         print(e)
         print('Ошибка получения погоды')
 
 
-def main():
-    city = 'krasnoyarsk'
+def get_weather(text: str) -> str:
+    city = text.strip()
     lat, lon = get_location(city)
-    get_weather(lat, lon)
+    weather(lat, lon)
+    answer = ''
+    return answer
 
 
 if __name__ == '__main__':
-    main()
+    get_weather('Moscow')
