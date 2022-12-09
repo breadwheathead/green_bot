@@ -4,19 +4,8 @@ from aiogram.dispatcher import Dispatcher, filters
 from bot_init import bot
 from config import ADMIN_ID
 from messages import MESSAGES
-from keyboards import bottom_keyboard, weather_keyboard
+from keyboards import bottom_keyboard
 from weather import get_weather
-
-
-async def callback_weather_city(call: CallbackQuery):
-    await bot.answer_callback_query(call.id)
-    weather = get_weather('krasnoyarsk')
-    await call.message.answer(weather)
-
-
-async def callback_weather_location(call: CallbackQuery):
-    await bot.answer_callback_query(call.id)
-    await call.message.answer('OK')
 
 
 async def access_denied(message: Message):
@@ -34,7 +23,7 @@ async def help_command(message: Message):
 
 
 async def weather_command(message: Message):
-    await bot.send_message(message.from_user.id, 'Выберете опцию:', reply_markup=weather_keyboard)
+    await message.answer('заглушка')
 
 
 async def rate_command(message: Message):
@@ -42,14 +31,12 @@ async def rate_command(message: Message):
 
 
 async def unknown_command(message: Message):
-    pass
+    weather = get_weather(message.text)
+    await message.answer(weather)
     # await message.delete()
 
 
 def register_handlers(dp: Dispatcher):
-    dp.register_callback_query_handler(callback_weather_city, filters.Text('weather_city'))
-    dp.register_callback_query_handler(callback_weather_location, filters.Text('weather_location'))
-
     # access denied
     dp.register_message_handler(access_denied, lambda m: m.chat.id != ADMIN_ID, content_types=types.ContentTypes.ANY)
 
