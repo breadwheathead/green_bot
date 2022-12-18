@@ -38,7 +38,7 @@ async def unknown_command(message: Message):
 
 def register_handlers(dp: Dispatcher):
     # access denied
-    dp.register_message_handler(access_denied, lambda m: m.chat.id != ADMIN_ID, content_types=types.ContentTypes.ANY)
+    dp.register_message_handler(access_denied, lambda m: m.from_user.id != ADMIN_ID, content_types=types.ContentTypes.ANY)
 
     dp.register_message_handler(start_command, commands='start')
     dp.register_message_handler(help_command, commands='help')

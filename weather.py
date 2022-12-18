@@ -31,6 +31,8 @@ def get_location(city: str) -> tuple:
     try:
         r = requests.get(url_city)
         data = r.json()
+        # with open('weather_1.json', 'w', encoding='utf-8') as f:
+        #     json.dump(data, f)
         lat = data[0]['lat']
         lon = data[0]['lon']
         return lat, lon
